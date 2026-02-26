@@ -3,6 +3,12 @@ import { AxiosInstance } from "axios";
 import { Client } from "@/types/clients";
 import { Note } from "@/types/notes";
 
+export interface CreateClientInput {
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
 export default class ClientsApi {
     private axiosInstance: AxiosInstance;
 
@@ -17,6 +23,11 @@ export default class ClientsApi {
 
     public getClient = async (clientId: string): Promise<Client> => {
         const response = await this.axiosInstance.get<Client>(`client/${clientId}`);
+        return response.data;
+    };
+
+    public createClient = async (data: CreateClientInput): Promise<Client> => {
+        const response = await this.axiosInstance.post<Client>("client", data);
         return response.data;
     };
 
