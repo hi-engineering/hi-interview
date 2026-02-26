@@ -1,7 +1,8 @@
 "use client";
 
-import { Table, Title } from "@mantine/core";
+import { Table, Title, Button, Group } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { useApi } from "@/api/context";
 import { Client } from "@/types/clients";
@@ -10,6 +11,7 @@ import styles from "./page.module.scss";
 
 export default function ClientsPage() {
     const api = useApi();
+    const router = useRouter();
     const [clients, setClients] = useState<Client[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -25,12 +27,9 @@ export default function ClientsPage() {
 
     return (
         <div className={styles.container}>
-            <Title
-                order={2}
-                className={styles.title}
-            >
-                Clients
-            </Title>
+            <Group justify="space-between" className={styles.header}>
+                <Title order={2}>Clients</Title>
+            </Group>
             <Table
                 striped
                 highlightOnHover
@@ -46,7 +45,11 @@ export default function ClientsPage() {
                 </Table.Thead>
                 <Table.Tbody>
                     {clients.map(client => (
-                        <Table.Tr key={client.id}>
+                        <Table.Tr
+                            key={client.id}
+                            className={styles.row}
+                            onClick={() => router.push(`/clients/${client.id}`)}
+                        >
                             <Table.Td>{client.first_name} {client.last_name}</Table.Td>
                             <Table.Td>{client.email}</Table.Td>
                             <Table.Td>{client.assigned_user_id ? "Yes" : "No"}</Table.Td>

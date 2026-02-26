@@ -2,6 +2,10 @@
     padding: var(--mantine-spacing-xl);
 }
 
-.title {
+.header {
     margin-bottom: var(--mantine-spacing-lg);
+}
+
+.row {
+    cursor: pointer;
 }
